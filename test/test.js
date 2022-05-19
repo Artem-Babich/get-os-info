@@ -1,11 +1,10 @@
-const { describe, it }               = require('mocha');
-const { expect }                     = require('chai');
-const getOsInfo                      = require('../lib').default;
-const { getMacInfo, getWindowsInfo } = require('../lib');
+const { describe, it }                          = require('mocha');
+const { expect }                                = require('chai');
+const { getOSInfo, getMacInfo, getWindowsInfo } = require('../lib');
 
 describe('getOSInfo function', function () {
     it('Should return correct OS info', async function () {
-        const osInfo = await getOsInfo();
+        const osInfo = await getOSInfo();
 
         expect(osInfo).to.not.be.null;
         expect(osInfo).to.not.be.undefined;

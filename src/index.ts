@@ -9,9 +9,8 @@ export interface OSInfo {
     version: string;
 }
 
-export { getMacInfo, getWindowsInfo };
 
-export default async function getOsInfo (): Promise<OSInfo | null> {
+export default async function getOSInfo (): Promise<OSInfo | null> {
     if (OS.linux)
         return await getLinuxInfo();
 
@@ -23,3 +22,5 @@ export default async function getOsInfo (): Promise<OSInfo | null> {
 
     return null;
 }
+
+export { getMacInfo, getWindowsInfo, getLinuxInfo, getOSInfo };
