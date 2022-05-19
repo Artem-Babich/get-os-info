@@ -7,7 +7,7 @@
   "files": [
     "lib/*.js",
     "lib/**/*.js",
-    "lib/*.d.ts"
+    "lib/**/*.d.ts"
   ],
   "scripts": {
     "publish-please": "publish-please",
