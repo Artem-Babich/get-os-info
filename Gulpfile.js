@@ -10,7 +10,7 @@ function build () {
     return spawn('npx tsc -p tsconfig.json', { stdio: 'inherit', shell: true });
 }
 
-function lint () {
+function lint (options) {
     const eslint = require('gulp-eslint');
 
     return gulp
@@ -20,12 +20,27 @@ function lint () {
             'test/**/*.js',
             'Gulpfile.js',
         ])
-        .pipe(eslint())
+        .pipe(eslint(options))
         .pipe(eslint.format())
+        .pipe(options && options.fix ? gulp.dest(file => file.base) : eslint.failAfterError())
         .pipe(eslint.failAfterError());
 }
 
+function lintFix () {
+    return lint({ fix: true });
+}
+
+function testMocha () {
+    const mochaOpts = [
+        'test/**/*test.js',
+    ];
+
+    return spawn(`npx mocha ${mochaOpts.join(' ')}`, { stdio: 'inherit', shell: true });
+}
+
 exports['fast-build'] = gulp.series(clean, build);
-exports.build         = gulp.parallel(exports['fast-build'], lint);
+exports.build         = gulp.parallel(gulp.series(clean, build), lint);
 exports.lint          = lint;
-exports.default       = gulp.parallel(lint, gulp.series(clean, build));
+exports['lint-fix']   = lintFix;
+exports.test          = gulp.series(exports.build, testMocha);
+exports.default       = exports.build;

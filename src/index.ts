@@ -9,6 +9,8 @@ export interface OSInfo {
     version: string;
 }
 
+export { getMacInfo, getWindowsInfo };
+
 export default async function getOsInfo (): Promise<OSInfo | null> {
     if (OS.linux)
         return await getLinuxInfo();
